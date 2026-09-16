@@ -1,0 +1,115 @@
+/* Kerangka halaman: badan, bilah atas, navigasi, tata letak, responsif. */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; font-family:var(--body); color:var(--tinta);
+  background-color:var(--kertas);
+  background-image:linear-gradient(var(--garis) 1px, transparent 1px),
+                   linear-gradient(90deg, var(--garis) 1px, transparent 1px);
+  background-size:26px 26px;
+  font-size:15.5px; line-height:1.6;
+}
+h1,h2,h3,h4{font-family:var(--disp); font-weight:700; line-height:1.15; margin:0}
+code,kbd,pre,.mono{font-family:var(--mono)}
+button{font-family:inherit; font-size:inherit; cursor:pointer}
+a{color:var(--merah)}
+:focus-visible{outline:2.5px solid var(--merah); outline-offset:2px; border-radius:2px}
+
+/* ---------- shell ---------- */
+.bar{
+  position:sticky; top:0; z-index:60;
+  /* Tinggi dipatok supaya bilah TIDAK pernah membungkus ke dua baris.
+     Kalau membungkus, tingginya berubah sementara navigasi memakai
+     nilai tetap sebagai titik awal — itu membuat laci di HP meleset. */
+  height:var(--tinggi-bar);
+  background:rgba(233,239,243,.93); backdrop-filter:blur(8px);
+  border-bottom:1.5px solid var(--garis-tebal);
+  display:flex; align-items:center; gap:14px; padding:0 16px;
+}
+.brand{font-family:var(--disp); font-weight:700; font-size:15px; letter-spacing:-.01em;
+  display:flex; align-items:center; gap:8px; min-width:0;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.brand .tag{font-family:var(--mono); font-size:10px; font-weight:600; flex:none;
+  background:var(--merah); color:#fff; padding:2px 6px; border-radius:3px; letter-spacing:.04em}
+.bar .prog{margin-left:auto; flex:none; display:flex; align-items:center; gap:9px;
+  font-size:12px; color:var(--tinta-2); font-family:var(--mono)}
+.pbar{width:110px; height:7px; background:var(--putih); border:1.5px solid var(--garis-tebal); border-radius:99px; overflow:hidden}
+.pbar i{display:block; height:100%; background:var(--hijau); width:0%; transition:width .4s}
+.menu-btn{display:none; flex:none; border:1.5px solid var(--garis-tebal); background:var(--putih);
+  border-radius:6px; padding:5px 10px; font-size:13px; font-weight:600; color:var(--tinta)}
+
+.wrap{display:grid; grid-template-columns:var(--lebar-sisi) 1fr; gap:0; max-width:1240px; margin:0 auto}
+nav{
+  position:sticky; top:var(--tinggi-bar); align-self:start;
+  height:calc(100vh - var(--tinggi-bar));
+  height:calc(100dvh - var(--tinggi-bar));   /* 100dvh: ikut menyusut saat bilah alamat HP muncul */
+  overflow-y:auto; overscroll-behavior:contain;
+  padding:20px 12px 40px; border-right:1.5px solid var(--garis-tebal);
+}
+nav .grp{font-family:var(--mono); font-size:10.5px; font-weight:600; letter-spacing:.09em;
+  text-transform:uppercase; color:var(--tinta-3); margin:16px 0 6px 8px}
+nav .grp:first-child{margin-top:0}
+nav a{
+  display:flex; align-items:center; gap:8px; padding:6px 9px; border-radius:6px;
+  color:var(--tinta-2); text-decoration:none; font-size:13.5px; font-weight:500; margin-bottom:1px;
+}
+nav a:hover{background:var(--putih); color:var(--tinta)}
+nav a.on{background:var(--tinta); color:#fff}
+nav a .n{font-family:var(--mono); font-size:10.5px; opacity:.65; flex:none; min-width:15px}
+nav a [data-judul]{flex:1; min-width:0}   /* judul panjang membungkus rapi di sidebar yang lebih ramping */
+nav a .dot{flex:none; margin-left:auto; width:7px; height:7px; border-radius:99px;
+  background:transparent; border:1.5px solid var(--garis-tebal)}
+nav a.done .dot{background:var(--hijau); border-color:var(--hijau)}
+nav a.on .dot{border-color:rgba(255,255,255,.5)}
+
+main{padding:26px 22px 90px; min-width:0}
+.pane{display:none; animation:in .28s ease}
+.pane.on{display:block}
+@keyframes in{from{opacity:0; transform:translateY(6px)}to{opacity:1; transform:none}}
+
+/* ---------- headers ---------- */
+.eyebrow{font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--merah); margin-bottom:6px}
+h2.title{font-size:clamp(25px,4.4vw,36px); letter-spacing:-.025em; margin-bottom:8px}
+.lede{color:var(--tinta-2); max-width:60ch; margin-bottom:8px}
+.meta{display:flex; gap:7px; flex-wrap:wrap; margin:12px 0 22px}
+.chip{font-family:var(--mono); font-size:11px; font-weight:500; padding:3px 9px; border-radius:99px;
+  border:1.5px solid var(--garis-tebal); background:var(--putih); color:var(--tinta-2)}
+.chip.v{border-color:var(--hijau); color:var(--hijau); background:var(--hijau-pucat)}
+.chip.r{border-color:var(--merah); color:var(--merah); background:var(--merah-pucat)}
+
+
+@media(max-width:860px){
+  .wrap{grid-template-columns:1fr}
+  nav{
+    /* Laci menempel ke keempat sisi layar (di bawah bilah atas).
+       Tingginya DITENTUKAN oleh top+bottom, BUKAN oleh isinya.
+
+       Jangan pernah menambahkan height:auto di sini. height:auto
+       bertentangan dengan bottom:0 — CSS akan memakai height:auto dan
+       mengabaikan bottom:0, sehingga laci memanjang mengikuti isinya
+       melewati layar. Karena position:fixed tidak ikut tergulir bersama
+       halaman, bagian bawah daftar modul jadi tidak bisa dijangkau.
+       Itulah bug yang dilaporkan dua kali. */
+    position:fixed;
+    top:var(--tinggi-bar); left:0; right:0; bottom:0;
+    overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain;
+    padding:20px 12px calc(40px + env(safe-area-inset-bottom, 0px));
+    background:var(--kertas); z-index:55; display:none; border-right:none;
+  }
+  nav.open{display:block}
+  .menu-btn{display:block}
+  main{padding:20px 15px 80px}
+}
+
+/* Di layar sangat sempit, bilah kemajuan diperkecil supaya bilah atas
+   tetap muat dalam satu baris — lihat catatan pada .bar di atas.
+   Teks merek tidak disembunyikan; cukup dipotong dengan elipsis. */
+@media(max-width:430px){
+  .pbar{width:66px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms !important; transition-duration:.01ms !important}
+  html{scroll-behavior:auto}
+}

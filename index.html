@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab OSN-K Informatika 2027</title>
+<meta name="description" content="Lab interaktif untuk persiapan OSN-K Informatika: 17 modul materi dengan simulasi langsung, rumus terverifikasi, dan drill pengenalan pola.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+<div class="bar">
+  <button class="menu-btn" id="mb" aria-label="Buka daftar modul" aria-expanded="false" aria-controls="nav">☰ Menu</button>
+  <div class="brand"><span class="tag">OSN-K</span> Lab Informatika 2027</div>
+  <div class="prog"><span id="ptxt">0/17</span><span class="pbar"><i id="pb"></i></span></div>
+</div>
+
+<div class="tirai" id="tirai" hidden></div>
+
+<div class="wrap">
+  <nav id="nav" aria-label="Daftar modul"></nav>
+  <main id="main"></main>
+</div>
+
+<noscript>
+  <div style="padding:24px;max-width:640px;margin:0 auto">
+    <h2>JavaScript perlu diaktifkan</h2>
+    <p>Lab ini seluruhnya berjalan di browser, jadi JavaScript harus aktif.</p>
+  </div>
+</noscript>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
